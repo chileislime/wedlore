@@ -181,8 +181,8 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
     <div class="nav-links">
       <a href="/#regions">The Atlas</a>
       <a href="/#/quiz">Vibe Quiz</a>
-      <a href="#venues">Venues</a>
-      <a href="#venues" class="nav-cta">Explore</a>
+      <a href="#guide">The guide</a>
+      <a href="#guide" class="nav-cta">Explore</a>
     </div>
   </nav>
   <div class="crumb"><a href="/">Wedlore</a> / <a href="/#regions">The Atlas</a> / <a href="wedlore-italy.html">Italy</a> / <b>Tuscany</b></div>
@@ -202,7 +202,7 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
         a view and set a long table in front of it.
       </p>
       <div class="rhero-ctas">
-        <a href="#venues" class="btn btn-primary">Browse the venues ↓</a>
+        <a href="#guide" class="btn btn-primary">Read the Tuscany guide ↓</a>
         <a href="/#/quiz" class="btn btn-ghost">Take the vibe quiz</a>
       </div>
     </div>
@@ -236,7 +236,7 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
 </header>
 
 <!-- FACTS -->
-<section class="facts">
+<section class="facts" id="guide">
   <div class="wrap">
     <div class="legal-callout">
       <span class="lc-flag"><i></i>Symbolic ceremony</span>
@@ -266,38 +266,6 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
     </div>
   </div>
 </section>
-
-<!-- VENUES -->
-<section class="venues" id="venues">
-  <div class="wrap">
-    <div class="venues-head">
-      <div><span class="eyebrow">The venues</span><h2 style="margin-top:10px">Estates across Tuscany.</h2></div>
-      <span class="sample-note">Sample inventory · founding venues being verified</span>
-    </div>
-
-    <div class="vfilter">
-      <div class="chips" id="areaChips">
-        <button class="chip-btn on" data-area="all">All areas</button>
-        <button class="chip-btn" data-area="Chianti">Chianti</button>
-        <button class="chip-btn" data-area="Val d'Orcia">Val d'Orcia</button>
-        <button class="chip-btn" data-area="Maremma">Maremma</button>
-      </div>
-      <div class="vselect">
-        <label for="capSel">Guests</label>
-        <select id="capSel">
-          <option value="any">Any size</option>
-          <option value="s">Up to 60</option>
-          <option value="m">60 – 120</option>
-          <option value="l">120+</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="vcount" id="vcount"></div>
-    <div class="vgrid" id="vgrid"></div>
-  </div>
-</section>
-
 <!-- REGION NEWSLETTER -->
 <section class="band band-burg">
   <div class="wrap band-inner">
@@ -342,61 +310,7 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
     <div class="foot-bottom"><span>© 2026 Wedlore</span><span>An atlas from the Banda studio</span></div>
   </div>
 </footer>
-
 <script>
-/* PLACEHOLDER inventory: invented estates. Each object is the venue schema
-   that will also drive the compare feature + POI map. Real venues replace these. */
-const VENUES=[
-  {name:"Villa Montecorvo",area:"Chianti",desc:"Hilltop villa ringed by vineyards and a cypress drive.",min:40,max:110,price:3,sleeps:24,incl:"Exclusive use · in-house catering · 12 rooms",tags:["vineyard","mediterranean","rustic"]},
-  {name:"Borgo delle Allodole",area:"Chianti",desc:"A restored stone hamlet with its own little chapel.",min:30,max:90,price:3,sleeps:30,incl:"Whole-hamlet hire · catering · sleeps 30",tags:["rustic","garden"]},
-  {name:"Castello di Pian dei Cipressi",area:"Chianti",desc:"A turreted castle with frescoed halls and formal gardens.",min:60,max:160,price:4,sleeps:28,incl:"Castle &amp; grounds · catering partners · 14 suites",tags:["gothic","palatial"]},
-  {name:"Podere Luce",area:"Val d'Orcia",desc:"A minimal farmhouse alone on a hill, under enormous skies.",min:20,max:60,price:2,sleeps:16,incl:"Farmhouse · garden ceremony · 8 rooms",tags:["minimalist","rustic"]},
-  {name:"La Cipressaia",area:"Val d'Orcia",desc:"A cypress-lined drive to a honey-stone villa and pool terrace.",min:40,max:120,price:3,sleeps:22,incl:"Villa · pool terrace · catering · 11 rooms",tags:["mediterranean","garden"]},
-  {name:"Tenuta dell'Orcia",area:"Val d'Orcia",desc:"A working wine estate on a ridge above the valley.",min:50,max:140,price:3,sleeps:26,incl:"Cellar dinners · vineyard ceremony · 13 rooms",tags:["vineyard","rustic"]},
-  {name:"Tenuta Saliventi",area:"Maremma",desc:"A coastal estate where the last hills meet the sea.",min:40,max:120,price:3,sleeps:20,incl:"Sea-view terrace · catering · 10 rooms",tags:["beach","mediterranean"]},
-  {name:"Casale del Vento",area:"Maremma",desc:"A wind-swept farmhouse among old olive groves.",min:20,max:70,price:2,sleeps:14,incl:"Farmhouse · olive-grove ceremony · 7 rooms",tags:["rustic","wildnature"]}
-];
-
-let area="all", cap="any";
-const grid=document.getElementById("vgrid"), count=document.getElementById("vcount");
-const euro=n=>'<span class="price">'+"€".repeat(n)+'</span><span style="opacity:.3">'+"€".repeat(4-n)+'</span>';
-
-function capMatch(v){
-  if(cap==="any")return true;
-  if(cap==="s")return v.min<=60;
-  if(cap==="m")return v.min<=120 && v.max>=60;
-  if(cap==="l")return v.max>=120;
-  return true;
-}
-function thumbSVG(){return '<svg viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="#33231f" stroke-opacity=".18"><path d="M0 150 Q75 120 150 145 T300 135"/><path d="M0 170 Q75 145 150 165 T300 158"/></g><g stroke="#5a1b2b" stroke-opacity=".35"><line x1="60" y1="150" x2="60" y2="108"/><line x1="60" y1="108" x2="72" y2="120"/><line x1="60" y1="108" x2="48" y2="120"/><line x1="240" y1="148" x2="240" y2="100"/><line x1="240" y1="100" x2="252" y2="114"/><line x1="240" y1="100" x2="228" y2="114"/></g></svg>';}
-
-function render(){
-  const list=VENUES.filter(v=>(area==="all"||v.area===area)&&capMatch(v));
-  count.textContent=list.length+(list.length===1?" estate":" estates")+(area==="all"?" across Tuscany":" in "+area);
-  grid.innerHTML = list.length ? list.map(v=>`
-    <article class="vcard">
-      <div class="vthumb">${thumbSVG()}<div class="ph">Photo · pending venue permission</div></div>
-      <div class="vbody">
-        <div class="varea">${v.area}${v.verified?'<span class="vok">From venue site</span>':''}</div>
-        <h3>${v.name}</h3>
-        <p class="vdesc">${v.desc}</p>
-        <div class="vmeta"><span>${v.capText||(v.min+'–'+v.max+' guests')}</span><span>Sleeps ${v.sleeps}+</span><span>${v.price>0?euro(v.price):'<span class="price">'+(v.priceText||'On request')+'</span>'}</span></div>
-        <p class="vincl">${v.incl}</p>
-        ${v.note?'<p class="vnote">'+v.note+'</p>':''}
-        <div class="vtags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join("")}<span class="vflag"><i></i>Symbolic</span></div>
-      </div>
-    </article>`).join("") : '<div class="vempty">No estates match yet, so widen the filters.</div>';
-}
-
-document.getElementById("areaChips").addEventListener("click",e=>{
-  const b=e.target.closest(".chip-btn"); if(!b)return;
-  area=b.dataset.area;
-  document.querySelectorAll("#areaChips .chip-btn").forEach(c=>c.classList.toggle("on",c===b));
-  render();
-});
-document.getElementById("capSel").addEventListener("change",e=>{cap=e.target.value;render();});
-render();
-
 /* newsletter stub → wire to ESP (Tuscany segment) */
 document.getElementById('signup').addEventListener('submit',function(){
   var email=this.querySelector('input[type=email]').value;
