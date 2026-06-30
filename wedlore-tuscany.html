@@ -257,7 +257,7 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
     <div class="lore-head"><span class="eyebrow">The lore</span><h2>What a Tuscan wedding actually is.</h2></div>
     <div class="lore-body">
       <p>It is less an event than a slow weekend. Couples take a villa or a whole stone hamlet for several days, and the wedding becomes the centre of a longer gathering, with welcome dinners under fig trees, lazy mornings by a pool, a ceremony as the light goes gold, and then a feast that runs until the candles do. The land does the heavy lifting, so the design budget goes further than it would almost anywhere else.</p>
-      <p>Three corners of the region pull in slightly different directions. None is more correct than another; they're moods. Use the filters below to sort venues by where they sit.</p>
+      <p>Three corners of the region pull in slightly different directions. None is more correct than another; they are simply moods. The three below are the ones worth knowing first.</p>
     </div>
     <div class="subareas">
       <div class="sa"><div class="sa-coord">43.4°N · Chianti</div><h3>Chianti</h3><p>This is the postcard centre, with vineyards, cypress allées, and frescoed villas between Florence and Siena, the most connected and the most classically Tuscan.</p></div>
@@ -272,8 +272,8 @@ footer{background:var(--green-deep); color:rgba(243,236,221,.85); padding:58px 0
     <div class="bt">
       <span class="eyebrow">Tuscany, as it fills in</span>
       <h2>Get new Tuscan venues<br />as we verify them.</h2>
-      <p>We're locking founding estates now. Be first to see each one, with the honest notes that come with it.</p>
-    </div>
+      <h2>Get each corner<br />as we map it.</h2>
+      <p>We are mapping Tuscany sub-area by sub-area, from Chianti to the Val d'Orcia to the Maremma. Be first as each one opens, with the honest legal notes that come with it.</p>
     <form class="form" id="signup" onsubmit="return false">
       <input type="email" placeholder="you@email.com" aria-label="Email" required />
       <button class="btn btn-cream" type="submit">Keep me posted</button>
@@ -316,6 +316,6 @@ document.getElementById('signup').addEventListener('submit',function(){
   var email=this.querySelector('input[type=email]').value;
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return;
   console.log('[Wedlore newsletter · tuscany]',{email:email});
-  this.innerHTML='<span class="note" style="font-size:13px;letter-spacing:.04em;text-transform:none;color:var(--cream)">You are on the list, and new Tuscan estates will land in your inbox first.</span>';
+  this.innerHTML='<span class="note" style="font-size:13px;letter-spacing:.04em;text-transform:none;color:var(--cream)">You are on the list, and new corners of Tuscany will land in your inbox first.</span>';
 });
 </script>
